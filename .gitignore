@@ -1,0 +1,22 @@
+# Ignorar pastas node_modules
+node_modules/
+
+# Ignorar ficheiros de configuração sensíveis
+.env
+
+# Ignorar logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar ficheiros de builds
+/build
+/dist
+
+# Ignorar pastas específicas de sistemas operativos
+.DS_Store
+
+# Ignorar dependências específicas de pacotes
+package-lock.json
+yarn.lock
+
