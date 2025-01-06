@@ -9,8 +9,23 @@ const ProductList =()=>{
     },[])
 
     const getProducts = async () => {
+        const user = JSON.parse(localStorage.getItem('user')); // Obtém o utilizador do localStorage
+        const userId = user?._id;
+
+        if (!userId) {
+            console.error("User ID não encontrado no local storage.");
+            return;
+        }
+
         try {
-            const response = await fetch("http://localhost:4000/products");
+            const response = await fetch("http://localhost:4000/productss", {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json",
+                    authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
+                },
+                body: JSON.stringify({ userId }), // Envia o userId no corpo
+            });
             if (response.ok) {
                 const result = await response.json();
                 if (Array.isArray(result)) {
@@ -28,7 +43,10 @@ const ProductList =()=>{
     const deleteProduct=async(id)=>{
         console.warn(id)
         let result = await fetch(`http://localhost:4000/product/${id}`, {
-            method: "Delete"
+            method: "Delete",
+            headers:{
+                authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
         });
         result = await result.json();
         if (result){
@@ -39,7 +57,11 @@ const ProductList =()=>{
     const searchHandle = async (event)=>{
         let key = event.target.value
         if (key){
-            let result = await fetch(`http://localhost:4000/search/${key}`);
+            let result = await fetch(`http://localhost:4000/search/${key}`, {
+                headers:{
+                    authorization: `bearer ${JSON.parse(localStorage.getItem('token'))}`
+                }
+            });
             result = await result.json()
             if (result){
                 setProducts(result)

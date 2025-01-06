@@ -24,7 +24,8 @@ const SignUp =()=>{
         })
         result = await result.json();
         console.warn(result);
-        localStorage.setItem("user", JSON.stringify(result)) //save in local storage (key,value) and cannot save in json, change to string
+        localStorage.setItem("user", JSON.stringify(result.result)) //save in local storage (key,value) and cannot save in json, change to string
+        localStorage.setItem('token', JSON.stringify(result.auth));
         navigate('/') // go back to X page
     }
     return(
